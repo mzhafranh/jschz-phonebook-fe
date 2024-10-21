@@ -13,6 +13,29 @@
   }
 }
 
+@media (max-width: 600px) {
+  .custom-width {
+    max-width: 100% !important;
+    /* Custom max width for small screens */
+    min-width: 100% !important;
+    /* Custom min width for small screens */
+  }
+}
+
+@media (min-width: 768px) {
+  .custom-width {
+    max-width: 33.33333333% !important;
+    min-width: 33.33333333% !important;
+  }
+}
+
+@media (min-width: 992px) {
+  .custom-width {
+    max-width: 240px !important;
+    min-width: 240px !important;
+  }
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
@@ -32,23 +55,29 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
 }
 
 .circle-icon {
-  width: 80px;  /* You can adjust this size */
-  height: 80px; /* Keep width and height equal to make it a circle */
+  width: 80px;
+  /* You can adjust this size */
+  height: 80px;
+  /* Keep width and height equal to make it a circle */
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 50%; /* Makes it a circle */
-  overflow: hidden; /* Ensures icon is cropped to the circle */
+  border-radius: 50%;
+  /* Makes it a circle */
+  overflow: hidden;
+  /* Ensures icon is cropped to the circle */
 }
 
 .circle-icon svg {
-  width: 80px;  /* Adjust icon size if needed */
-  height: 80px; /* Adjust icon size if needed */
+  width: 80px;
+  /* Adjust icon size if needed */
+  height: 80px;
+  /* Adjust icon size if needed */
 }
-

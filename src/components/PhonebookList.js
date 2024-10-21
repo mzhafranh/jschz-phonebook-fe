@@ -3,7 +3,7 @@ import PhonebookItem from "./PhonebookItem"
 export default function PhonebookList({ data, removePhonebook, updatePhonebook }) {
     const nodeList = data.map(
         (phonebook, index) => <PhonebookItem
-            key={phonebook.id}
+            id={phonebook.id}
             avatar={phonebook.avatar ? phonebook.avatar : 'null'}
             name={phonebook.name}
             phone={phonebook.phone}

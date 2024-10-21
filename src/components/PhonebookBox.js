@@ -29,22 +29,76 @@ export default function PhonebookBox() {
 
     const [phonebook, setPhonebook] = useState(data.phonebooks)
 
-    const addPhonebook = (id, name, phone) => {
-        setPhonebook([{ id, name, phone, avatar: null }, ...phonebook])
-    }
-
-    const removePhonebook = (id) => {
-        setPhonebook(phonebook.filter(pb => pb.id !== id))
-    }
-
-    const updatePhonebook = (id, name, phone) => {
-        setPhonebook(phonebook.map(pb => {
-            if (pb.id === id) {
-                pb.name = name
-                pb.phone = phone
+    const addPhonebook = async (name, phone) => {
+        const newData = {
+            name,
+            phone
+        };
+        try {
+            const response = await fetch(`http://localhost:3001/api/phonebooks/`, {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(newData),
+            });
+      
+            if (!response.ok) {
+              throw new Error("Failed to post data");
             }
-            return pb
-        }))
+      
+            const result = await response.json();
+            console.log("Data posted successfully:", result);
+          } catch (error) {
+            console.error("Error posting data:", error);
+          }
+    
+    }
+
+    const removePhonebook = async (id) => {
+        try {
+            const response = await fetch(`http://localhost:3001/api/phonebooks/${id}`, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+              }
+            });
+      
+            if (!response.ok) {
+              throw new Error("Failed to post data");
+            }
+      
+            const result = await response.json();
+            console.log("Data posted successfully:", result);
+          } catch (error) {
+            console.error("Error posting data:", error);
+          }
+    }
+
+    const updatePhonebook = async (id, name, phone) => {
+        const updateData = {
+            name,
+            phone
+        };
+
+        try {
+            const response = await fetch(`http://localhost:3001/api/phonebooks/${id}`, {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(updateData),
+            });
+      
+            if (!response.ok) {
+              throw new Error("Failed to post data");
+            }
+      
+            const result = await response.json();
+            console.log("Data posted successfully:", result);
+          } catch (error) {
+            console.error("Error posting data:", error);
+          }
     }
 
 
@@ -52,8 +106,8 @@ export default function PhonebookBox() {
         return (
             <div className='container'>
                 <PhonebookTopBar />
-                <div className="card-body">
-                    {data ? <PhonebookList data={data.phonebooks} remove={removePhonebook} update={updatePhonebook} /> : ''}
+                <div>
+                    {data ? <PhonebookList data={data.phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} /> : ''}
                 </div>
                 {/* {data ? <p>Data: {JSON.stringify(data.phonebooks)}</p> : <p>Loading...</p>} */}
             </div>
