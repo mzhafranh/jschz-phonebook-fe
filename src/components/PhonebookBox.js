@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react"
-import PhonebookForm from "./PhonebookForm"
 import PhonebookList from "./PhonebookList"
 import PhonebookTopBar from "./PhonebookTopbar"
 
@@ -125,12 +124,40 @@ export default function PhonebookBox() {
     }
   }
 
+  const handleFileUpload = async (file, id) => {
+
+    if (!file) {
+      alert("Please select a file first");
+      return;
+    }
+
+    // Create FormData object and append the file
+    const formData = new FormData();
+    formData.append('avatar', file); // 'file' is the key used in the server
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/phonebooks/${id}/avatar`, {
+        method: 'PUT',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload file');
+      }
+
+      const result = await response.json();
+      console.log('File uploaded successfully:', result);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
+  };
+
   if (!loading) {
     return (
       <div className='container'>
         <PhonebookTopBar search={fetchPhonebookData} add={addPhonebook} sort={sort}/>
         <div>
-          {data ? <PhonebookList data={data.phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} /> : ''}
+          {data ? <PhonebookList data={data.phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} uploadAvatar={handleFileUpload} /> : ''}
         </div>
         {/* {data ? <p>Data: {JSON.stringify(data.phonebooks)}</p> : <p>Loading...</p>} */}
       </div>

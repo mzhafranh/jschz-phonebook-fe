@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDownZA, faUserPlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownZA, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import PhonebookForm from './PhonebookForm';
 
 
@@ -14,7 +14,7 @@ export default function PhonebookTopBar({ search, add, sort }) {
     };
 
     const handleSortChange = (e) => {
-        if (sort == 'asc') {
+        if (sort === 'asc') {
             search(query, 'desc');
         } else {
             search(query, 'asc');

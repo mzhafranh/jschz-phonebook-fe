@@ -1,12 +1,13 @@
-import { useState } from "react"
+import { useState, useRef } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTie, faPenToSquare, faTrashCan, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function PhonebookItem({ id, avatar, name, phone, remove, update}) {
+export default function PhonebookItem({ id, avatar, name, phone, remove, update, uploadAvatar }) {
   const [isEditing, setIsEditing] = useState(false);
   const [editableName, setEditableName] = useState(name);
   const [editablePhone, setEditablePhone] = useState(phone);
+  const fileInputRef = useRef(null);
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);  // Toggle between edit and view modes
@@ -29,13 +30,33 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update}
     remove(id)
   }
 
+  const handleIconClick = () => {
+    fileInputRef.current.click();
+  }
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (!file) {
+      alert('No file selected')
+      return
+    }
+    uploadAvatar(file, id)
+  };
+
   return (
     <div className="custom-width mb-1 mt-3">
-      <div className="card" style={{ background: "#CCC" }}>
+      <div className="card" style={{ background: "#CCC", paddingLeft: "5px"}}>
         <div className='row g-0'>
-          <div className='col-auto circle-icon mt-2 mb-2'>
-            <FontAwesomeIcon icon={faUserTie} />
-          </div>
+          {avatar != "null" ? (
+            <div className='col-auto circle-icon mt-2 mb-2' onClick={handleIconClick} style={{ cursor: 'pointer' }}>
+              <img src={`http://localhost:3001/uploads/${avatar}`} />
+            </div>
+          ) : (
+            <div className='col-auto circle-icon mt-2 mb-2' onClick={handleIconClick} style={{ cursor: 'pointer' }}>
+              <FontAwesomeIcon icon={faUserTie} />
+            </div>
+          )
+          }
           <div className='col'>
             <div className="card-body p-2">
               {isEditing ? (
@@ -74,6 +95,12 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update}
           </div>
         </div>
       </div>
+      <input
+        type="file"
+        ref={fileInputRef}
+        style={{ display: 'none' }}
+        onChange={handleFileChange}
+      />
     </div>
   );
 }
