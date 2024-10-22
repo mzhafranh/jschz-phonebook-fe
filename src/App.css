@@ -31,8 +31,8 @@
 
 @media (min-width: 992px) {
   .custom-width {
-    max-width: 240px !important;
-    min-width: 240px !important;
+    max-width: 250px !important;
+    min-width: 250px !important;
   }
 }
 
