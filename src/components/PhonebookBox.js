@@ -27,11 +27,20 @@ export default function PhonebookBox() {
       });
   }, []);  // Empty dependency array means this effect runs only once after the initial render
 
-  const [phonebook, setPhonebook] = useState(data.phonebooks)
+  const fetchPhonebookData = async (keyword, sort) => {
+    const params = {
+      keyword,
+      sort
+    }
+    const queryString = new URLSearchParams(params).toString();
 
-  const fetchPhonebookData = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/phonebooks');
+      const response = await fetch(`http://localhost:3001/api/phonebooks?${queryString}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
       const result = await response.json();
       setData(result);
       setLoading(false);
@@ -60,7 +69,7 @@ export default function PhonebookBox() {
 
       const result = await response.json();
       console.log("Data posted successfully:", result);
-      fetchPhonebookData()
+      fetchPhonebookData('', 'asc')
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -82,7 +91,7 @@ export default function PhonebookBox() {
 
       const result = await response.json();
       console.log("Data removed successfully:", result);
-      fetchPhonebookData()
+      fetchPhonebookData('', 'asc')
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -117,7 +126,7 @@ export default function PhonebookBox() {
   if (!loading) {
     return (
       <div className='container'>
-        <PhonebookTopBar add={addPhonebook} />
+        <PhonebookTopBar search={fetchPhonebookData} add={addPhonebook} />
         <div>
           {data ? <PhonebookList data={data.phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} /> : ''}
         </div>

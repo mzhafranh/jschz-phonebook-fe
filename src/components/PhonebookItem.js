@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTie, faPenToSquare, faTrashCan, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 
 
-export default function PhonebookItem({ id, avatar, name, phone, remove, update }) {
+export default function PhonebookItem({ id, avatar, name, phone, remove, update}) {
   const [isEditing, setIsEditing] = useState(false);
   const [editableName, setEditableName] = useState(name);
   const [editablePhone, setEditablePhone] = useState(phone);
