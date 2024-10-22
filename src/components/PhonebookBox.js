@@ -117,7 +117,7 @@ export default function PhonebookBox() {
   if (!loading) {
     return (
       <div className='container'>
-        <PhonebookTopBar />
+        <PhonebookTopBar add={addPhonebook} />
         <div>
           {data ? <PhonebookList data={data.phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} /> : ''}
         </div>

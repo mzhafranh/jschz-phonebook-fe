@@ -1,8 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownZA, faUserPlus, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import PhonebookForm from './PhonebookForm';
 
 
-export default function PhonebookTopBar() {
+export default function PhonebookTopBar({ add }) {
 
     return (
         <div className='row' style={{
@@ -27,9 +28,7 @@ export default function PhonebookTopBar() {
                 </div>
             </div>
             <div className='col-auto'>
-                <button className='btn' style={{ backgroundColor: "#AF8210" }}>
-                    <FontAwesomeIcon icon={faUserPlus} />
-                </button>
+                <PhonebookForm add={add} />
             </div>
         </div>
     )
