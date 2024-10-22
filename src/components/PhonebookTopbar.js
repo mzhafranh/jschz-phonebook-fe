@@ -4,7 +4,7 @@ import { faArrowDownZA, faUserPlus, faMagnifyingGlass } from '@fortawesome/free-
 import PhonebookForm from './PhonebookForm';
 
 
-export default function PhonebookTopBar({ search, add }) {
+export default function PhonebookTopBar({ search, add, sort }) {
     const [query, setQuery] = useState('');  // State to hold the search query
 
     const handleSearchChange = (e) => {
@@ -12,6 +12,14 @@ export default function PhonebookTopBar({ search, add }) {
         setQuery(value);  // Update the query state
         search(value, 'asc');    // Call the search function passed as a prop
     };
+
+    const handleSortChange = (e) => {
+        if (sort == 'asc') {
+            search(query, 'desc');
+        } else {
+            search(query, 'asc');
+        }
+    }
 
     return (
         <div className='row' style={{
@@ -22,7 +30,7 @@ export default function PhonebookTopBar({ search, add }) {
             width: '100%'
         }}>
             <div className='col-auto'>
-                <button className='btn' style={{ backgroundColor: "#AF8210" }}>
+                <button className='btn' onClick={handleSortChange} style={{ backgroundColor: "#AF8210" }}>
                     <FontAwesomeIcon icon={faArrowDownZA} />
                 </button>
             </div>

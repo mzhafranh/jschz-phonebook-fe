@@ -5,6 +5,7 @@ import PhonebookTopBar from "./PhonebookTopbar"
 
 export default function PhonebookBox() {
   const [data, setData] = useState([]);  // To store the fetched data
+  const [sort, setSort] = useState('asc'); 
   const [loading, setLoading] = useState(true);  // To manage loading state
   const [error, setError] = useState(null);  // To handle errors
 
@@ -43,6 +44,7 @@ export default function PhonebookBox() {
       });
       const result = await response.json();
       setData(result);
+      setSort(sort)
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -126,7 +128,7 @@ export default function PhonebookBox() {
   if (!loading) {
     return (
       <div className='container'>
-        <PhonebookTopBar search={fetchPhonebookData} add={addPhonebook} />
+        <PhonebookTopBar search={fetchPhonebookData} add={addPhonebook} sort={sort}/>
         <div>
           {data ? <PhonebookList data={data.phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} /> : ''}
         </div>
