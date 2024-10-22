@@ -49,7 +49,7 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
         <div className='row g-0'>
           {avatar != "null" ? (
             <div className='col-auto circle-icon mt-2 mb-2' onClick={handleIconClick} style={{ cursor: 'pointer' }}>
-              <img src={`http://localhost:3001/uploads/${avatar}`} />
+              <img src={`http://localhost:3001/uploads/${avatar}`} style={{height:"100%"}}/>
             </div>
           ) : (
             <div className='col-auto circle-icon mt-2 mb-2' onClick={handleIconClick} style={{ cursor: 'pointer' }}>

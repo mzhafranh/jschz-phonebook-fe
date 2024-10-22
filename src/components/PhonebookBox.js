@@ -146,6 +146,8 @@ export default function PhonebookBox() {
       }
 
       const result = await response.json();
+
+      fetchPhonebookData('', 'asc')
       console.log('File uploaded successfully:', result);
     } catch (error) {
       console.error('Error uploading file:', error);
