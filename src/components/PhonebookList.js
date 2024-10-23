@@ -13,7 +13,7 @@ export default function PhonebookList({ data, removePhonebook, updatePhonebook, 
             uploadAvatar={uploadAvatar}
         />)
     return (
-        <div className='row mt-5 justify-content-center'>
+        <div className='row justify-content-center' style={{marginTop:"50px"}}>
             {/* {JSON.stringify(data)} */}
             {nodeList}
         </div>
