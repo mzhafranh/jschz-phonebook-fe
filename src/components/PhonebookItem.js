@@ -1,6 +1,7 @@
 import { useState, useRef } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTie, faPenToSquare, faTrashCan, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
+import PhonebookDeleteConfirmation from "./PhonebookDeleteConfirmation";
 
 
 export default function PhonebookItem({ id, avatar, name, phone, remove, update, uploadAvatar }) {
@@ -25,10 +26,6 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
     update(id, editableName, editablePhone)
     setIsEditing(false);  // Exit edit mode after saving
   };
-
-  const handleDelete = () => {
-    remove(id)
-  }
 
   const handleIconClick = () => {
     fileInputRef.current.click();
@@ -86,9 +83,7 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
                   <button className="btn p-1" onClick={handleEditClick}>
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
-                  <button className="btn p-1" onClick={handleDelete}>
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </button>
+                  <PhonebookDeleteConfirmation id={id} remove={remove}/>
                 </>
               )}
             </div>
