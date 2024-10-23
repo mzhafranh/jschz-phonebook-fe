@@ -35,12 +35,12 @@ export default function PhonebookTopBar({ search, add, sort }) {
                 </button>
             </div>
             <div className='col'>
-                <div className='input-group' style={{ border: '1px solid black', borderRadius: '3px' }} >
-                    <span className='input-group-text' style={{ borderRight: 'none', background: 'white' }}>
+                <div className='custom-input-group' style={{ border: '1px solid black', borderRadius: '3px' }} >
+                    <span className='custom-input-group-text' style={{ borderRight: 'none', background: 'white' }}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                     </span>
                     <input 
-                        className='form-control' 
+                        className='custom-form-control' 
                         type='text' 
                         style={{ borderLeft: 'none' }} 
                         value={query}  // Set the input's value to the query state

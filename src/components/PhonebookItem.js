@@ -63,13 +63,15 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
                     type="text"
                     value={editableName}
                     onChange={handleNameChange}
-                    className="form-control mb-2"
+                    className="custom-form-control"
+                    style={{marginBottom:"5px"}}
                   />
                   <input
                     type="text"
                     value={editablePhone}
                     onChange={handlePhoneChange}
-                    className="form-control mb-2"
+                    className="custom-form-control"
+                    style={{marginBottom:"5px"}}
                   />
                   <button className="btn" onClick={handleSave}>
                     <FontAwesomeIcon icon={faFloppyDisk} />

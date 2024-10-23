@@ -68,41 +68,42 @@ export default function PhonebookForm({ add }) {
                             <div className="mb-3">
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="custom-form-control"
                                     id="name"
                                     value={name}
                                     onChange={(e) => setName(e.target.value)}
                                     required
-                                    style={{border: '1px solid black'}}
+                                    style={{ border: '1px solid black' }}
                                 />
                             </div>
                             <div className="mb-3">
                                 <input
                                     type="text"
-                                    className="form-control"
+                                    className="custom-form-control"
                                     id="phone"
                                     value={phone}
                                     onChange={(e) => setPhone(e.target.value)}
                                     required
-                                    style={{border: '1px solid black'}}
+                                    style={{ border: '1px solid black' }}
                                 />
                             </div>
-                            <div className="row">
-                                <div className="col-6">
-                                    <button type="submit" className="btn" style={{ backgroundColor: "#AF8210", color: '#fff', width: "100%" }}>
-                                        save
-                                    </button>
-                                </div>
-                                <div className="col-6">
-                                    <button
-                                        type="button"
-                                        onClick={handleCloseForm}
-                                        className="btn"
-                                        style={{ backgroundColor: "#AF8210", color: '#fff', width: "100%" }}
-                                    >
-                                        cancel
-                                    </button>
-                                </div>
+                            <div style={{ alignItems: "center", textAlign:"center"}}>
+
+                                <button
+                                    type="submit"
+                                    className="btn"
+                                    style={{ backgroundColor: "#AF8210", color: '#fff', margin: "5px 5px 5px 5px", width: "45%" }}>
+                                    save
+                                </button>
+                                <button
+                                    type="button"
+                                    onClick={handleCloseForm}
+                                    className="btn"
+                                    style={{ backgroundColor: "#AF8210", color: '#fff', margin: "5px 5px 5px 5px", width: "45%" }}
+                                >
+                                    cancel
+                                </button>
+
                             </div>
                         </form>
                     </div>
