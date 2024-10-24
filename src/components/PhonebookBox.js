@@ -48,9 +48,36 @@ export default function PhonebookBox() {
         },
       });
       const result = await response.json();
-      setData([...data, ...result.phonebooks]);
+      setData((prevData) => [...prevData, ...result.phonebooks]);
       setSort(sort)
-      setPage(result.page)
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      setLoading(false);
+    }
+  };
+
+  const refreshPhonebookData = async (keyword, sort, page) => {
+    setKeyword(keyword)
+    const params = {
+      keyword,
+      sort,
+      page
+    }
+
+    const queryString = new URLSearchParams(params).toString();
+
+    // setLoading(true)
+    try { 
+      const response = await fetch(`http://localhost:3001/api/phonebooks?${queryString}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      const result = await response.json();
+      setData(result.phonebooks);
+      setSort(sort)
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -100,7 +127,7 @@ export default function PhonebookBox() {
 
       const result = await response.json();
       console.log("Data removed successfully:", result);
-      fetchPhonebookData(keyword, 'asc', 1)
+      refreshPhonebookData(keyword, 'asc', 1)
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -164,22 +191,28 @@ export default function PhonebookBox() {
 
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && !loading) {
-      fetchPhonebookData(keyword, sort, page + 1);
+      setPage((prevPage) => prevPage + 1); // Increment the page state
     }
   };
 
   // Set up the event listener for scroll
   useEffect(() => {
+    if (page > 1) { // Prevent fetch on initial load
+      fetchPhonebookData(keyword, sort, page);
+    }
+  }, [page, keyword, sort]);
+
+  useEffect(() => {
     window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll); // Cleanup on unmount
-  }, [loading]); // Add loading to dependencies so it checks this state before fetching again
+    return () => window.removeEventListener("scroll", handleScroll); // Cleanup
+  }, [loading]);
 
 
   if (!loading) {
     return (
       <div className='container'>
         <p style={{marginTop:"50px"}}>{page}</p>
-        <PhonebookTopBar search={fetchPhonebookData} add={addPhonebook} sort={sort}/>
+        <PhonebookTopBar search={refreshPhonebookData} add={addPhonebook} sort={sort}/>
         <div>
           {data ? <PhonebookList data={data} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} uploadAvatar={handleFileUpload} /> : ''}
         </div>
