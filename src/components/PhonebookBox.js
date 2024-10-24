@@ -4,7 +4,9 @@ import PhonebookTopBar from "./PhonebookTopbar"
 
 export default function PhonebookBox() {
   const [data, setData] = useState([]);  // To store the fetched data
+  const [page, setPage] = useState(1);
   const [sort, setSort] = useState('asc'); 
+  const [keyword, setKeyword] = useState('')
   const [loading, setLoading] = useState(true);  // To manage loading state
   const [error, setError] = useState(null);  // To handle errors
 
@@ -18,7 +20,7 @@ export default function PhonebookBox() {
         return response.json();  // Parse the response as JSON
       })
       .then(data => {
-        setData(data);  // Update state with the fetched data
+        setData(data.phonebooks);  // Update state with the fetched data
         setLoading(false);  // Set loading to false once data is fetched
       })
       .catch(error => {
@@ -27,14 +29,18 @@ export default function PhonebookBox() {
       });
   }, []);  // Empty dependency array means this effect runs only once after the initial render
 
-  const fetchPhonebookData = async (keyword, sort) => {
+  const fetchPhonebookData = async (keyword, sort, page) => {
+    setKeyword(keyword)
     const params = {
       keyword,
-      sort
+      sort,
+      page
     }
+
     const queryString = new URLSearchParams(params).toString();
 
-    try {
+    // setLoading(true)
+    try { 
       const response = await fetch(`http://localhost:3001/api/phonebooks?${queryString}`, {
         method: "GET",
         headers: {
@@ -42,11 +48,13 @@ export default function PhonebookBox() {
         },
       });
       const result = await response.json();
-      setData(result);
+      setData([...data, ...result.phonebooks]);
       setSort(sort)
+      setPage(result.page)
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
+      setLoading(false);
     }
   };
 
@@ -70,7 +78,7 @@ export default function PhonebookBox() {
 
       const result = await response.json();
       console.log("Data posted successfully:", result);
-      fetchPhonebookData('', 'asc')
+      fetchPhonebookData('', 'asc', 1)
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -92,7 +100,7 @@ export default function PhonebookBox() {
 
       const result = await response.json();
       console.log("Data removed successfully:", result);
-      fetchPhonebookData('', 'asc')
+      fetchPhonebookData(keyword, 'asc', 1)
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -147,19 +155,33 @@ export default function PhonebookBox() {
 
       const result = await response.json();
 
-      fetchPhonebookData('', 'asc')
+      fetchPhonebookData(keyword, 'asc', 1)
       console.log('File uploaded successfully:', result);
     } catch (error) {
       console.error('Error uploading file:', error);
     }
   };
 
+  const handleScroll = () => {
+    if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && !loading) {
+      fetchPhonebookData(keyword, sort, page + 1);
+    }
+  };
+
+  // Set up the event listener for scroll
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll); // Cleanup on unmount
+  }, [loading]); // Add loading to dependencies so it checks this state before fetching again
+
+
   if (!loading) {
     return (
       <div className='container'>
+        <p style={{marginTop:"50px"}}>{page}</p>
         <PhonebookTopBar search={fetchPhonebookData} add={addPhonebook} sort={sort}/>
         <div>
-          {data ? <PhonebookList data={data.phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} uploadAvatar={handleFileUpload} /> : ''}
+          {data ? <PhonebookList data={data} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} uploadAvatar={handleFileUpload} /> : ''}
         </div>
         {/* {data ? <p>Data: {JSON.stringify(data.phonebooks)}</p> : <p>Loading...</p>} */}
       </div>
