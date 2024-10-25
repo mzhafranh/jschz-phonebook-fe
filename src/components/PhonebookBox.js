@@ -80,6 +80,7 @@ export default function PhonebookBox() {
       });
       const result = await response.json();
       setData(result.phonebooks);
+      setPage(1)
       setSort(sort)
       setLoading(false);
     } catch (error) {
@@ -108,7 +109,7 @@ export default function PhonebookBox() {
 
       const result = await response.json();
       console.log("Data posted successfully:", result);
-      fetchPhonebookData('', 'asc', 1)
+      refreshPhonebookData(keyword, 'asc', 1)
     } catch (error) {
       console.error("Error posting data:", error);
     }
@@ -216,8 +217,8 @@ export default function PhonebookBox() {
   if (!loading) {
     return (
       <div className='container'>
-        <p style={{marginTop:"50px"}}>Page: {page}</p>
-        <p>Total Page: {totalPage}</p>
+        {/* <p style={{marginTop:"50px"}}>Page: {page}</p> */}
+        {/* <p>Total Page: {totalPage}</p> */}
         <PhonebookTopBar search={refreshPhonebookData} add={addPhonebook} sort={sort}/>
         <div>
           {data ? <PhonebookList data={data} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} uploadAvatar={handleFileUpload} /> : ''}
