@@ -7,6 +7,7 @@ export default function PhonebookBox() {
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState('asc'); 
   const [keyword, setKeyword] = useState('')
+  const [totalPage, setTotalPage] = useState(1)
   const [loading, setLoading] = useState(true);  // To manage loading state
   const [error, setError] = useState(null);  // To handle errors
 
@@ -21,6 +22,7 @@ export default function PhonebookBox() {
       })
       .then(data => {
         setData(data.phonebooks);  // Update state with the fetched data
+        setTotalPage(data.pages)
         setLoading(false);  // Set loading to false once data is fetched
       })
       .catch(error => {
@@ -50,6 +52,7 @@ export default function PhonebookBox() {
       const result = await response.json();
       setData((prevData) => [...prevData, ...result.phonebooks]);
       setSort(sort)
+      setTotalPage(result.pages);
       setLoading(false);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -191,13 +194,15 @@ export default function PhonebookBox() {
 
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && !loading) {
-      setPage((prevPage) => prevPage + 1); // Increment the page state
+      if (page < totalPage){
+        setPage((prevPage) => prevPage + 1); // Increment the page state
+      }
     }
   };
 
   // Set up the event listener for scroll
   useEffect(() => {
-    if (page > 1) { // Prevent fetch on initial load
+    if (page > 1 && page <= totalPage) { // Prevent fetch on initial load
       fetchPhonebookData(keyword, sort, page);
     }
   }, [page, keyword, sort]);
@@ -205,13 +210,14 @@ export default function PhonebookBox() {
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll); // Cleanup
-  }, [loading]);
+  }, [loading, page, totalPage]);
 
 
   if (!loading) {
     return (
       <div className='container'>
-        <p style={{marginTop:"50px"}}>{page}</p>
+        <p style={{marginTop:"50px"}}>Page: {page}</p>
+        <p>Total Page: {totalPage}</p>
         <PhonebookTopBar search={refreshPhonebookData} add={addPhonebook} sort={sort}/>
         <div>
           {data ? <PhonebookList data={data} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} uploadAvatar={handleFileUpload} /> : ''}
