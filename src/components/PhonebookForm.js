@@ -7,25 +7,20 @@ export default function PhonebookForm({ add }) {
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
 
-    // Open the form overlay
     const handleOpenForm = () => {
         setIsFormVisible(true);
     };
 
-    // Close the form overlay
     const handleCloseForm = () => {
         setIsFormVisible(false);
     };
 
-    // Handle form submission
     const handleSubmit = (e) => {
         e.preventDefault();
 
         add(name, phone);
-        // Here, you can send the form data (name, phone) to an API or handle it as needed
         console.log("Form Submitted", { name, phone });
-
-        // Clear the form and hide the overlay after submission
+        
         setName("");
         setPhone("");
         setIsFormVisible(false);

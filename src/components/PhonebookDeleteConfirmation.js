@@ -5,17 +5,14 @@ import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
 export default function PhonebookDeleteConfirmation({ id, remove }) {
     const [isFormVisible, setIsFormVisible] = useState(false);
 
-    // Open the form overlay
     const handleOpenConfirmation = () => {
         setIsFormVisible(true);
     };
 
-    // Close the form overlay
     const handleCloseConfirmation = () => {
         setIsFormVisible(false);
     };
 
-    // Handle form submission
     const handleDelete = (e) => {
         remove(id)
         setIsFormVisible(false);
@@ -44,7 +41,6 @@ export default function PhonebookDeleteConfirmation({ id, remove }) {
                         zIndex: 9999 // Ensure it blocks the entire screen
                     }}
                 >
-                    {/* The form inside the overlay */}
                     <div
                         style={{
                             backgroundColor: "#fff",

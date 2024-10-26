@@ -12,22 +12,21 @@ export default function PhonebookBox() {
   const [error, setError] = useState(null);  // To handle errors
 
   useEffect(() => {
-    // Fetch data when the component mounts
-    fetch('http://localhost:3001/api/phonebooks')  // Example API endpoint
+    fetch('http://localhost:3001/api/phonebooks')
       .then(response => {
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-        return response.json();  // Parse the response as JSON
+        return response.json();  
       })
       .then(data => {
-        setData(data.phonebooks);  // Update state with the fetched data
+        setData(data.phonebooks); 
         setTotalPage(data.pages)
-        setLoading(false);  // Set loading to false once data is fetched
+        setLoading(false);  
       })
       .catch(error => {
-        setError(error);  // Handle errors by setting the error state
-        setLoading(false);  // Also stop loading if there's an error
+        setError(error);  
+        setLoading(false);  
       });
   }, []);  // Empty dependency array means this effect runs only once after the initial render
 
@@ -70,7 +69,6 @@ export default function PhonebookBox() {
 
     const queryString = new URLSearchParams(params).toString();
 
-    // setLoading(true)
     try { 
       const response = await fetch(`http://localhost:3001/api/phonebooks?${queryString}`, {
         method: "GET",
@@ -196,7 +194,7 @@ export default function PhonebookBox() {
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && !loading) {
       if (page < totalPage){
-        setPage((prevPage) => prevPage + 1); // Increment the page state
+        setPage((prevPage) => prevPage + 1); 
       }
     }
   };

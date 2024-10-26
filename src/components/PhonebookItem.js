@@ -11,20 +11,20 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
   const fileInputRef = useRef(null);
 
   const handleEditClick = () => {
-    setIsEditing(!isEditing);  // Toggle between edit and view modes
+    setIsEditing(!isEditing);  
   };
 
   const handleNameChange = (e) => {
-    setEditableName(e.target.value);  // Update the name as user types
+    setEditableName(e.target.value);  
   };
 
   const handlePhoneChange = (e) => {
-    setEditablePhone(e.target.value);  // Update the phone as user types
+    setEditablePhone(e.target.value);  
   };
 
   const handleSave = () => {
     update(id, editableName, editablePhone)
-    setIsEditing(false);  // Exit edit mode after saving
+    setIsEditing(false); 
   };
 
   const handleIconClick = () => {
@@ -58,7 +58,6 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
             <div className="card-body p-2">
               {isEditing ? (
                 <>
-                  {/* Editable name and phone inputs */}
                   <input
                     type="text"
                     value={editableName}
@@ -79,7 +78,6 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
                 </>
               ) : (
                 <>
-                  {/* Display name and phone as text when not editing */}
                   <p className='m-0'>{editableName}</p>
                   <p className='m-0'>{editablePhone}</p>
                   <button className="btn p-1" onClick={handleEditClick}>

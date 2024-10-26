@@ -9,8 +9,8 @@ export default function PhonebookTopBar({ search, add, sort }) {
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
-        setQuery(value);  // Update the query state
-        search(value, 'asc');    // Call the search function passed as a prop
+        setQuery(value);
+        search(value, 'asc');
     };
 
     const handleSortChange = (e) => {
@@ -43,7 +43,7 @@ export default function PhonebookTopBar({ search, add, sort }) {
                         type='text'
                         style={{ borderLeft: 'none' }}
                         value={query}  // Set the input's value to the query state
-                        onChange={handleSearchChange}  // Call handleSearchChange on input change
+                        onChange={handleSearchChange} 
                     />
                 </div>
             </div>
