@@ -1,34 +1,30 @@
 import { useState, useEffect } from "react"
+import { useSelector, useDispatch } from 'react-redux';
 import PhonebookList from "./PhonebookList"
 import PhonebookTopBar from "./PhonebookTopbar"
+import { fetchPhonebooks, setPage, setLoading, setTotalPage } from './actions';
 
 export default function PhonebookBox() {
+
+  const dispatch = useDispatch();
+  const { phonebooks, page, loading, totalPage } = useSelector(state => state);
+
   const [data, setData] = useState([]);  // To store the fetched data
-  const [page, setPage] = useState(1);
   const [sort, setSort] = useState('asc'); 
   const [keyword, setKeyword] = useState('')
-  const [totalPage, setTotalPage] = useState(1)
-  const [loading, setLoading] = useState(true);  // To manage loading state
   const [error, setError] = useState(null);  // To handle errors
 
   useEffect(() => {
-    fetch('http://localhost:3001/api/phonebooks')
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.json();  
-      })
-      .then(data => {
-        setData(data.phonebooks); 
-        setTotalPage(data.pages)
-        setLoading(false);  
-      })
-      .catch(error => {
-        setError(error);  
-        setLoading(false);  
-      });
-  }, []);  // Empty dependency array means this effect runs only once after the initial render
+    if (page <= totalPage && !loading) {
+      dispatch(setLoading(true));
+      fetch(`http://localhost:3001/api/phonebooks?page=${page}`)
+        .then(response => response.json())
+        .then(data => {
+          dispatch(fetchPhonebooks(data.phonebooks));
+          dispatch(setLoading(false));
+        });
+    }
+  }, [page]);
 
   const fetchPhonebookData = async (keyword, sort, page) => {
     setKeyword(keyword)
@@ -194,7 +190,7 @@ export default function PhonebookBox() {
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && !loading) {
       if (page < totalPage){
-        setPage((prevPage) => prevPage + 1); 
+        dispatch(setPage(page + 1));
       }
     }
   };
@@ -202,7 +198,7 @@ export default function PhonebookBox() {
   // Set up the event listener for scroll
   useEffect(() => {
     if (page > 1 && page <= totalPage) { // Prevent fetch on initial load
-      fetchPhonebookData(keyword, sort, page);
+      dispatch(fetchPhonebookData(keyword, sort, page));
     }
   }, [page, keyword, sort]);
 
