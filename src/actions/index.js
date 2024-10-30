@@ -43,172 +43,180 @@ export const setTotalPage = (totalPage) => ({
   payload: totalPage
 })
 
-export const fetchPhonebookData = dispatch => async (keyword, sort, page) => {
-  dispatch(setKeyword(keyword))
-  const params = {
-    keyword,
-    sort,
-    page
-  }
+export const fetchPhonebookData = (keyword, sort, page) => {
+  return async (dispatch) => {
+    dispatch(setKeyword(keyword))
+    const params = {
+      keyword,
+      sort,
+      page,
+    };
 
-  const queryString = new URLSearchParams(params).toString();
+    const queryString = new URLSearchParams(params).toString();
 
-  // setLoading(true)
-  try {
-    const response = await fetch(`http://localhost:3001/api/phonebooks?${queryString}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
-    const result = await response.json();
-    // setData((prevData) => [...prevData, ...result.phonebooks]);
-    dispatch(fetchPhonebooks(result.phonebooks))
-    // setSort(sort)
-    dispatch(setSort(sort))
-    // setTotalPage(result.pages);
-    dispatch(setTotalPage(result.pages))
-    // setLoading(false);
-    dispatch(setLoading(false))
+    try {
+      const response = await fetch(`http://localhost:3001/api/phonebooks?${queryString}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      });
 
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    dispatch(setLoading(false))
-  }
-};
+      const result = await response.json();
+      dispatch(fetchPhonebooks(result.phonebooks))
+      dispatch(setSort(sort))
+      dispatch(setTotalPage(result.pages))
+      dispatch(setLoading(false))
 
-export const refreshPhonebookData = dispatch => async (keyword, sort, page) => {
-  dispatch(setKeyword(keyword))
-  const params = {
-    keyword,
-    sort,
-    page
-  }
-
-  const queryString = new URLSearchParams(params).toString();
-
-  try {
-    const response = await fetch(`http://localhost:3001/api/phonebooks?${queryString}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/x-www-form-urlencoded",
-      },
-    });
-    const result = await response.json();
-    dispatch(refreshPhonebooks(result.phonebooks))
-    dispatch(setPage(1))
-    dispatch(setSort(sort))
-    dispatch(setLoading(false))
-  } catch (error) {
-    console.error('Error fetching data:', error);
-    dispatch(setLoading(false));
-  }
-};
-
-export const addPhonebook = dispatch => async (name, phone) => {
-  const newData = {
-    name,
-    phone
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      dispatch(setLoading(false))
+    }
   };
-  const keyword = dispatch({type:'GET_KEYWORD'})
-  try {
-    const response = await fetch(`http://localhost:3001/api/phonebooks/`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(newData),
-    });
+};
 
-    if (!response.ok) {
-      throw new Error("Failed to post data");
+export const refreshPhonebookData = (keyword, sort, page) => {
+  return async (dispatch) => {
+    dispatch(setKeyword(keyword))
+    const params = {
+      keyword,
+      sort,
+      page
     }
 
-    const result = await response.json();
-    console.log("Data posted successfully:", result);
-    dispatch(refreshPhonebookData(keyword, 'asc', 1))
-  } catch (error) {
-    console.error("Error posting data:", error);
-  }
-}
+    const queryString = new URLSearchParams(params).toString();
 
-export const removePhonebook = dispatch => async (id) => {
-  const keyword = dispatch({type:'GET_KEYWORD'})
-  try {
-    const response = await fetch(`http://localhost:3001/api/phonebooks/${id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
+    try {
+      const response = await fetch(`http://localhost:3001/api/phonebooks?${queryString}`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+      });
+      const result = await response.json();
+      dispatch(refreshPhonebooks(result.phonebooks))
+      dispatch(setPage(1))
+      dispatch(setSort(sort))
+      dispatch(setLoading(false))
+    } catch (error) {
+      console.error('Error fetching data:', error);
+      dispatch(setLoading(false));
+    }
+  }
+};
+
+export const addPhonebook = (name, phone) => {
+  return async (dispatch) => {
+    const newData = {
+      name,
+      phone
+    };
+    const keyword = dispatch({ type: 'GET_KEYWORD' })
+    try {
+      const response = await fetch(`http://localhost:3001/api/phonebooks/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to post data");
       }
-    });
 
-    if (!response.ok) {
-      throw new Error("Failed to post data");
+      const result = await response.json();
+      console.log("Data posted successfully:", result);
+      dispatch(refreshPhonebookData(keyword, 'asc', 1))
+    } catch (error) {
+      console.error("Error posting data:", error);
     }
-
-    const result = await response.json();
-    console.log("Data removed successfully:", result);
-    dispatch(refreshPhonebookData(keyword, 'asc', 1))
-  } catch (error) {
-    console.error("Error posting data:", error);
   }
 }
 
-export const updatePhonebook = dispatch => async (id, name, phone) => {
-  const updateData = {
-    name,
-    phone
-  };
+export const removePhonebook = (id) => {
+  return async (dispatch) => {
+    const keyword = dispatch({ type: 'GET_KEYWORD' })
+    try {
+      const response = await fetch(`http://localhost:3001/api/phonebooks/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        }
+      });
 
-  try {
-    const response = await fetch(`http://localhost:3001/api/phonebooks/${id}`, {
-      method: "PUT",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(updateData),
-    });
+      if (!response.ok) {
+        throw new Error("Failed to post data");
+      }
 
-    if (!response.ok) {
-      throw new Error("Failed to post data");
+      const result = await response.json();
+      console.log("Data removed successfully:", result);
+      dispatch(refreshPhonebookData(keyword, 'asc', 1))
+    } catch (error) {
+      console.error("Error posting data:", error);
     }
-
-    const result = await response.json();
-    console.log("Data posted successfully:", result);
-  } catch (error) {
-    console.error("Error posting data:", error);
   }
 }
 
-export const handleFileUpload = dispatch => async (file, id) => {
 
-  if (!file) {
-    alert("Please select a file first");
-    return;
+export const updatePhonebook = (id, name, phone) => {
+  return async (dispatch) => {
+    const updateData = {
+      name,
+      phone
+    };
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/phonebooks/${id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(updateData),
+      });
+
+      if (!response.ok) {
+        throw new Error("Failed to post data");
+      }
+
+      const result = await response.json();
+      console.log("Data posted successfully:", result);
+    } catch (error) {
+      console.error("Error posting data:", error);
+    }
   }
+};
 
-  const keyword = dispatch({type:'GET_KEYWORD'})
-  
-  // Create FormData object and append the file
-  const formData = new FormData();
-  formData.append('avatar', file); // 'file' is the key used in the server
-
-  try {
-    const response = await fetch(`http://localhost:3001/api/phonebooks/${id}/avatar`, {
-      method: 'PUT',
-      body: formData,
-    });
-
-    if (!response.ok) {
-      throw new Error('Failed to upload file');
+export const handleFileUpload = (file, id) => {
+  return async (dispatch) => {
+    if (!file) {
+      alert("Please select a file first");
+      return;
     }
 
-    const result = await response.json();
+    const keyword = dispatch({ type: 'GET_KEYWORD' })
 
-    dispatch(fetchPhonebookData(keyword, 'asc', 1))
-    console.log('File uploaded successfully:', result);
-  } catch (error) {
-    console.error('Error uploading file:', error);
+    // Create FormData object and append the file
+    const formData = new FormData();
+    formData.append('avatar', file); // 'file' is the key used in the server
+
+    try {
+      const response = await fetch(`http://localhost:3001/api/phonebooks/${id}/avatar`, {
+        method: 'PUT',
+        body: formData,
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to upload file');
+      }
+
+      const result = await response.json();
+
+      dispatch(fetchPhonebookData(keyword, 'asc', 1))
+      console.log('File uploaded successfully:', result);
+    } catch (error) {
+      console.error('Error uploading file:', error);
+    }
   }
 };
 

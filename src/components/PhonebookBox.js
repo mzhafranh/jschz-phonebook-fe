@@ -15,11 +15,11 @@ export default function PhonebookBox() {
       fetch(`http://localhost:3001/api/phonebooks?page=${page}`)
         .then(response => response.json())
         .then(data => {
-          dispatch(fetchPhonebooks(data.phonebooks));
+          dispatch(fetchPhonebookData(keyword, sort, page));
           dispatch(setLoading(false));
         });
     }
-  }, [page]);
+  }, []);
 
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && !loading) {
@@ -45,8 +45,8 @@ export default function PhonebookBox() {
   if (!loading) {
     return (
       <div className='container'>
-        {/* <p style={{marginTop:"50px"}}>Page: {page}</p> */}
-        {/* <p>Total Page: {totalPage}</p> */}
+        <p style={{marginTop:"50px"}}>Page: {page}</p>
+        <p>Total Page: {totalPage}</p>
         <PhonebookTopBar search={refreshPhonebookData} add={addPhonebook} sort={sort}/>
         <div>
           {phonebooks ? <PhonebookList data={phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} uploadAvatar={handleFileUpload} /> : ''}
