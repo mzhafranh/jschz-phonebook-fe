@@ -12,7 +12,6 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
 
   const dispatch = useDispatch();
 
-
   const handleEditClick = () => {
     setIsEditing(!isEditing);  
   };
@@ -83,7 +82,7 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
                 <>
                   <p className='m-0'>{editableName}</p>
                   <p className='m-0'>{editablePhone}</p>
-                  <p>{id}</p>
+                  {/* <p>{id}</p> */}
                   <button className="btn p-1" onClick={handleEditClick}>
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>

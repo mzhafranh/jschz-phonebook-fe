@@ -1,4 +1,4 @@
-import PhonebookBox from './components/PhonebookBox';
+import PhonebookBox from './containers/PhonebookBox';
 import 'bootstrap/dist/css/bootstrap.css'
 import './App.css';
 

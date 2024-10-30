@@ -1,8 +1,8 @@
 import {  useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux';
-import PhonebookList from "./PhonebookList"
+import PhonebookList from "../components/PhonebookList"
 import PhonebookTopBar from "./PhonebookTopbar"
-import { fetchPhonebooks, fetchPhonebookData, setPage, setLoading, refreshPhonebookData, removePhonebook, updatePhonebook, handleFileUpload, addPhonebook } from '../actions';
+import { fetchPhonebookData, setPage, setLoading, refreshPhonebookData, removePhonebook, updatePhonebook, handleFileUpload, addPhonebook } from '../actions';
 
 export default function PhonebookBox() {
 

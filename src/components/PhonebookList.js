@@ -1,4 +1,4 @@
-import PhonebookItem from "./PhonebookItem"
+import PhonebookItem from "../containers/PhonebookItem"
 
 export default function PhonebookList({ data, removePhonebook, updatePhonebook, uploadAvatar, keyword, sort }) {
     const nodeList = data.map(
