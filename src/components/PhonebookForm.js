@@ -1,29 +1,33 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { setFormVisibility, setName, setPhone } from "../actions";
 
-export default function PhonebookForm({ add }) {
-    const [isFormVisible, setIsFormVisible] = useState(false);
-    const [name, setName] = useState("");
-    const [phone, setPhone] = useState("");
+
+export default function PhonebookForm({ add, keyword, sort }) {
+    const dispatch = useDispatch();
+    const { name, phone, formVisible } = useSelector((state) => state.phonebooks);
+
 
     const handleOpenForm = () => {
-        setIsFormVisible(true);
+        dispatch(setFormVisibility(true));
     };
 
     const handleCloseForm = () => {
-        setIsFormVisible(false);
+        dispatch(setFormVisibility(false));
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        add(name, phone);
+        dispatch(add(name, phone, keyword, sort));
+        
         console.log("Form Submitted", { name, phone });
         
-        setName("");
-        setPhone("");
-        setIsFormVisible(false);
+        dispatch(setName(""));
+        dispatch(setPhone(""));
+        dispatch(setFormVisibility(false));
     };
 
     return (
@@ -34,7 +38,7 @@ export default function PhonebookForm({ add }) {
             </button>
 
             {/* Fullscreen form overlay */}
-            {isFormVisible && (
+            {formVisible && (
                 <div
                     style={{
                         position: "fixed",
@@ -66,7 +70,7 @@ export default function PhonebookForm({ add }) {
                                     className="custom-form-control"
                                     id="name"
                                     value={name}
-                                    onChange={(e) => setName(e.target.value)}
+                                    onChange={(e) => dispatch(setName(e.target.value))}
                                     required
                                     style={{ border: '1px solid black' }}
                                 />
@@ -77,7 +81,7 @@ export default function PhonebookForm({ add }) {
                                     className="custom-form-control"
                                     id="phone"
                                     value={phone}
-                                    onChange={(e) => setPhone(e.target.value)}
+                                    onChange={(e) => dispatch(setPhone(e.target.value))}
                                     required
                                     style={{ border: '1px solid black' }}
                                 />

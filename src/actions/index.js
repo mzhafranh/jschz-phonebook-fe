@@ -43,6 +43,21 @@ export const setTotalPage = (totalPage) => ({
   payload: totalPage
 })
 
+export const setName = (name) => ({
+  type: 'SET_NAME',
+  payload: name
+})
+
+export const setPhone = (phone) => ({
+  type: 'SET_PHONE',
+  payload: phone
+})
+
+export const setFormVisibility = (formVisible) => ({
+  type: 'SET_FORM_VISIBILITY',
+  payload: formVisible
+})
+
 export const fetchPhonebookData = (keyword, sort, page) => {
   return async (dispatch) => {
     dispatch(setKeyword(keyword))
@@ -105,13 +120,13 @@ export const refreshPhonebookData = (keyword, sort, page) => {
   }
 };
 
-export const addPhonebook = (name, phone) => {
+export const addPhonebook = (name, phone, keyword, sort) => {
   return async (dispatch) => {
     const newData = {
       name,
       phone
     };
-    const keyword = dispatch({ type: 'GET_KEYWORD' })
+
     try {
       const response = await fetch(`http://localhost:3001/api/phonebooks/`, {
         method: "POST",
@@ -127,16 +142,15 @@ export const addPhonebook = (name, phone) => {
 
       const result = await response.json();
       console.log("Data posted successfully:", result);
-      dispatch(refreshPhonebookData(keyword, 'asc', 1))
+      dispatch(refreshPhonebookData(keyword, sort, 1))
     } catch (error) {
       console.error("Error posting data:", error);
     }
   }
 }
 
-export const removePhonebook = (id) => {
+export const removePhonebook = (id, keyword, sort) => {
   return async (dispatch) => {
-    const keyword = dispatch({ type: 'GET_KEYWORD' })
     try {
       const response = await fetch(`http://localhost:3001/api/phonebooks/${id}`, {
         method: "DELETE",
@@ -146,12 +160,12 @@ export const removePhonebook = (id) => {
       });
 
       if (!response.ok) {
-        throw new Error("Failed to post data");
+        throw new Error("Failed to delete data");
       }
 
       const result = await response.json();
       console.log("Data removed successfully:", result);
-      dispatch(refreshPhonebookData(keyword, 'asc', 1))
+      dispatch(refreshPhonebookData(keyword, sort, 1))
     } catch (error) {
       console.error("Error posting data:", error);
     }

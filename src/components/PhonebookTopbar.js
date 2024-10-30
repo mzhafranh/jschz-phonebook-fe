@@ -1,23 +1,24 @@
-import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownZA, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import PhonebookForm from './PhonebookForm';
+import { useDispatch } from 'react-redux';
+import { setKeyword } from '../actions';
 
 
-export default function PhonebookTopBar({ search, add, sort }) {
-    const [query, setQuery] = useState('');  // State to hold the search query
+export default function PhonebookTopBar({ search, add, sort, keyword}) {
+    const dispatch = useDispatch();
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
-        setQuery(value);
-        search(value, 'asc');
+        dispatch(setKeyword(value))
+        dispatch(search(value, sort, 1));
     };
 
     const handleSortChange = (e) => {
         if (sort === 'asc') {
-            search(query, 'desc');
+            dispatch(search(keyword, 'desc'));
         } else {
-            search(query, 'asc');
+            dispatch(search(keyword, 'asc'));
         }
     }
 
@@ -42,13 +43,13 @@ export default function PhonebookTopBar({ search, add, sort }) {
                         className='custom-form-control'
                         type='text'
                         style={{ borderLeft: 'none' }}
-                        value={query}  // Set the input's value to the query state
+                        value={keyword}  // Set the input's value to the query state
                         onChange={handleSearchChange} 
                     />
                 </div>
             </div>
             <div className='custom-col-auto'>
-                <PhonebookForm add={add} />
+                <PhonebookForm add={add} keyword={keyword} sort={sort} />
             </div>
         </div>
     )

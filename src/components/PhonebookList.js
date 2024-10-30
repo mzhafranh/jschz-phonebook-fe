@@ -1,6 +1,6 @@
 import PhonebookItem from "./PhonebookItem"
 
-export default function PhonebookList({ data, removePhonebook, updatePhonebook, uploadAvatar }) {
+export default function PhonebookList({ data, removePhonebook, updatePhonebook, uploadAvatar, keyword, sort }) {
     const nodeList = data.map(
         (phonebook, index) => <PhonebookItem
             key={phonebook.id}
@@ -11,6 +11,8 @@ export default function PhonebookList({ data, removePhonebook, updatePhonebook, 
             remove={removePhonebook}
             update={updatePhonebook}
             uploadAvatar={uploadAvatar}
+            keyword={keyword}
+            sort={sort}
         />)
     return (
         <div className='row justify-content-center' style={{marginTop:"50px"}}>

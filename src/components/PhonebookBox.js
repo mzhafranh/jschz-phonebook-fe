@@ -47,9 +47,9 @@ export default function PhonebookBox() {
       <div className='container'>
         <p style={{marginTop:"50px"}}>Page: {page}</p>
         <p>Total Page: {totalPage}</p>
-        <PhonebookTopBar search={refreshPhonebookData} add={addPhonebook} sort={sort}/>
+        <PhonebookTopBar search={refreshPhonebookData} add={addPhonebook} sort={sort} keyword={keyword}/>
         <div>
-          {phonebooks ? <PhonebookList data={phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} uploadAvatar={handleFileUpload} /> : ''}
+          {phonebooks ? <PhonebookList data={phonebooks} removePhonebook={removePhonebook} updatePhonebook={updatePhonebook} uploadAvatar={handleFileUpload} keyword={keyword} sort={sort}/> : ''}
         </div>
         {/* {data ? <p>Data: {JSON.stringify(data.phonebooks)}</p> : <p>Loading...</p>} */}
       </div>

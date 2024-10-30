@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { useDispatch } from 'react-redux';
 
-export default function PhonebookDeleteConfirmation({ id, remove }) {
+export default function PhonebookDeleteConfirmation({ id, remove, keyword, sort }) {
+    const dispatch = useDispatch();
+
     const [isFormVisible, setIsFormVisible] = useState(false);
 
     const handleOpenConfirmation = () => {
@@ -14,7 +17,7 @@ export default function PhonebookDeleteConfirmation({ id, remove }) {
     };
 
     const handleDelete = (e) => {
-        remove(id)
+        dispatch(remove(id, keyword, sort))
         setIsFormVisible(false);
     };
 
