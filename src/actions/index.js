@@ -201,14 +201,12 @@ export const updatePhonebook = (id, name, phone) => {
   }
 };
 
-export const handleFileUpload = (file, id) => {
+export const handleFileUpload = (file, id, keyword, sort) => {
   return async (dispatch) => {
     if (!file) {
       alert("Please select a file first");
       return;
     }
-
-    const keyword = dispatch({ type: 'GET_KEYWORD' })
 
     // Create FormData object and append the file
     const formData = new FormData();
@@ -226,7 +224,7 @@ export const handleFileUpload = (file, id) => {
 
       const result = await response.json();
 
-      dispatch(fetchPhonebookData(keyword, 'asc', 1))
+      dispatch(refreshPhonebookData(keyword, sort, 1))
       console.log('File uploaded successfully:', result);
     } catch (error) {
       console.error('Error uploading file:', error);

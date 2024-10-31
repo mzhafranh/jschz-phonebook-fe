@@ -39,7 +39,7 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
       alert('No file selected')
       return
     }
-    dispatch(uploadAvatar(file, id))
+    dispatch(uploadAvatar(file, id, keyword, sort))
   };
 
   return (
