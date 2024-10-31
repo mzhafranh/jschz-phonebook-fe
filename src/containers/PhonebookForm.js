@@ -75,7 +75,7 @@ export default function PhonebookForm() {
                                     className="custom-form-control"
                                     id="name"
                                     value={name}
-                                    onChange={(e) => dispatch(setName(e.target.value))}
+                                    onChange={(e) => setName(e.target.value)}
                                     required
                                     style={{ border: '1px solid black' }}
                                 />
@@ -86,7 +86,7 @@ export default function PhonebookForm() {
                                     className="custom-form-control"
                                     id="phone"
                                     value={phone}
-                                    onChange={(e) => dispatch(setPhone(e.target.value))}
+                                    onChange={(e) => setPhone(e.target.value)}
                                     required
                                     style={{ border: '1px solid black' }}
                                 />
