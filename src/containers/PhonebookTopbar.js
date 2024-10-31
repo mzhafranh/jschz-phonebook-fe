@@ -1,24 +1,25 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowDownZA, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
 import PhonebookForm from './PhonebookForm';
-import { useDispatch } from 'react-redux';
-import { setKeyword } from '../actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { refreshPhonebookData, setKeyword } from '../actions';
 
 
-export default function PhonebookTopBar({ search, add, sort, keyword}) {
+export default function PhonebookTopBar() {
     const dispatch = useDispatch();
+    const { keyword, sort } = useSelector((state) => state.phonebooks);
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
         dispatch(setKeyword(value))
-        dispatch(search(value, sort, 1));
+        dispatch(refreshPhonebookData(value, sort, 1));
     };
 
     const handleSortChange = (e) => {
         if (sort === 'asc') {
-            dispatch(search(keyword, 'desc'));
+            dispatch(refreshPhonebookData(keyword, 'desc'));
         } else {
-            dispatch(search(keyword, 'asc'));
+            dispatch(refreshPhonebookData(keyword, 'asc'));
         }
     }
 
@@ -49,7 +50,7 @@ export default function PhonebookTopBar({ search, add, sort, keyword}) {
                 </div>
             </div>
             <div className='custom-col-auto'>
-                <PhonebookForm add={add} keyword={keyword} sort={sort} />
+                <PhonebookForm/>
             </div>
         </div>
     )

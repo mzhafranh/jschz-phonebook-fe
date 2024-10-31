@@ -2,15 +2,18 @@ import { useState, useRef } from "react"
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserTie, faPenToSquare, faFloppyDisk } from '@fortawesome/free-solid-svg-icons';
 import PhonebookDeleteConfirmation from "./PhonebookDeleteConfirmation";
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { handleFileUpload, updatePhonebook } from "../actions";
 
-export default function PhonebookItem({ id, avatar, name, phone, remove, update, uploadAvatar, keyword, sort }) {
+export default function PhonebookItem({ id, avatar, name, phone}) {
+  const dispatch = useDispatch();
+  const { keyword, sort } = useSelector((state) => state.phonebooks);
+
   const [isEditing, setIsEditing] = useState(false);
   const [editableName, setEditableName] = useState(name);
   const [editablePhone, setEditablePhone] = useState(phone);
   const fileInputRef = useRef(null);
 
-  const dispatch = useDispatch();
 
   const handleEditClick = () => {
     setIsEditing(!isEditing);  
@@ -25,7 +28,7 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
   };
 
   const handleSave = () => {
-    dispatch(update(id, editableName, editablePhone))
+    dispatch(updatePhonebook(id, editableName, editablePhone))
     setIsEditing(false); 
   };
 
@@ -39,7 +42,7 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
       alert('No file selected')
       return
     }
-    dispatch(uploadAvatar(file, id, keyword, sort))
+    dispatch(handleFileUpload(file, id, keyword, sort))
   };
 
   return (
@@ -86,7 +89,7 @@ export default function PhonebookItem({ id, avatar, name, phone, remove, update,
                   <button className="btn p-1" onClick={handleEditClick}>
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
-                  <PhonebookDeleteConfirmation id={id} remove={remove} keyword={keyword} sort={sort}/>
+                  <PhonebookDeleteConfirmation id={id}/>
                 </>
               )}
             </div>

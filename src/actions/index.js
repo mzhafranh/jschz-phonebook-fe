@@ -1,4 +1,3 @@
-import { type } from '@testing-library/user-event/dist/type';
 import axios from 'axios'
 
 const API_URL = 'http://localhost:3001/api/'
@@ -43,21 +42,6 @@ export const setTotalPage = (totalPage) => ({
   payload: totalPage
 })
 
-export const setName = (name) => ({
-  type: 'SET_NAME',
-  payload: name
-})
-
-export const setPhone = (phone) => ({
-  type: 'SET_PHONE',
-  payload: phone
-})
-
-export const setFormVisibility = (formVisible) => ({
-  type: 'SET_FORM_VISIBILITY',
-  payload: formVisible
-})
-
 export const fetchPhonebookData = (keyword, sort, page) => {
   return async (dispatch) => {
     dispatch(setKeyword(keyword))
@@ -70,6 +54,7 @@ export const fetchPhonebookData = (keyword, sort, page) => {
     const queryString = new URLSearchParams(params).toString();
 
     try {
+
       const response = await fetch(`http://localhost:3001/api/phonebooks?${queryString}`, {
         method: 'GET',
         headers: {

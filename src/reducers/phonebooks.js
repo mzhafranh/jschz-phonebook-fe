@@ -5,9 +5,6 @@ const initialState = {
   totalPage: 1,
   keyword: '',
   sort: 'asc',
-  name: '',
-  phone: '',
-  formVisible: false,
   error: null
 };
 
@@ -50,21 +47,6 @@ function phonebooks(state = initialState, action) {
       return {
         ...state,
         loading: action.payload,
-      };
-    case 'SET_NAME':
-      return {
-        ...state,
-        name: action.payload,
-      };
-    case 'SET_PHONE':
-      return {
-        ...state,
-        phone: action.payload,
-      };
-    case 'SET_FORM_VISIBILITY':
-      return {
-        ...state,
-        formVisible: action.payload,
       };
 
     default:

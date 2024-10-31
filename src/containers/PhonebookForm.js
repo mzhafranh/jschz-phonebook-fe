@@ -1,33 +1,38 @@
 import React from "react";
+import { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
-import { setFormVisibility, setName, setPhone } from "../actions";
+import { addPhonebook } from "../actions";
 
 
-export default function PhonebookForm({ add, keyword, sort }) {
+export default function PhonebookForm() {
     const dispatch = useDispatch();
-    const { name, phone, formVisible } = useSelector((state) => state.phonebooks);
+    const { keyword, sort } = useSelector((state) => state.phonebooks);
 
+    const [isFormVisible, setIsFormVisible] = useState(false);
+    const [name, setName] = useState("");
+    const [phone, setPhone] = useState("");
 
+    
     const handleOpenForm = () => {
-        dispatch(setFormVisibility(true));
+        setIsFormVisible(true);
     };
 
     const handleCloseForm = () => {
-        dispatch(setFormVisibility(false));
+        setIsFormVisible(false);
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
-        dispatch(add(name, phone, keyword, sort));
+        dispatch(addPhonebook(name, phone, keyword, sort));
         
         console.log("Form Submitted", { name, phone });
         
-        dispatch(setName(""));
-        dispatch(setPhone(""));
-        dispatch(setFormVisibility(false));
+        setName("")
+        setPhone("")
+        setIsFormVisible(false);
     };
 
     return (
@@ -38,7 +43,7 @@ export default function PhonebookForm({ add, keyword, sort }) {
             </button>
 
             {/* Fullscreen form overlay */}
-            {formVisible && (
+            {isFormVisible && (
                 <div
                     style={{
                         position: "fixed",

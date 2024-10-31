@@ -1,18 +1,18 @@
 import PhonebookItem from "../containers/PhonebookItem"
+import { useSelector, useDispatch } from 'react-redux';
 
-export default function PhonebookList({ data, removePhonebook, updatePhonebook, uploadAvatar, keyword, sort }) {
-    const nodeList = data.map(
+
+export default function PhonebookList() {
+    const dispatch = useDispatch();
+    const { phonebooks } = useSelector((state) => state.phonebooks);
+
+    const nodeList = phonebooks.map(
         (phonebook, index) => <PhonebookItem
             key={phonebook.id}
             id={phonebook.id}
             avatar={phonebook.avatar ? phonebook.avatar : 'null'}
             name={phonebook.name}
             phone={phonebook.phone}
-            remove={removePhonebook}
-            update={updatePhonebook}
-            uploadAvatar={uploadAvatar}
-            keyword={keyword}
-            sort={sort}
         />)
     return (
         <div className='row justify-content-center' style={{marginTop:"50px"}}>

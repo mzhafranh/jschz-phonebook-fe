@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrashCan } from '@fortawesome/free-solid-svg-icons';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { removePhonebook } from "../actions";
 
-export default function PhonebookDeleteConfirmation({ id, remove, keyword, sort }) {
+export default function PhonebookDeleteConfirmation({ id }) {
     const dispatch = useDispatch();
+    const { keyword, sort } = useSelector((state) => state.phonebooks);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
 
@@ -17,7 +19,7 @@ export default function PhonebookDeleteConfirmation({ id, remove, keyword, sort 
     };
 
     const handleDelete = (e) => {
-        dispatch(remove(id, keyword, sort))
+        dispatch(removePhonebook(id, keyword, sort))
         setIsFormVisible(false);
     };
 
