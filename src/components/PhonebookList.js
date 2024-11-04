@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 
 
 export default function PhonebookList() {
-    const dispatch = useDispatch();
     const { phonebooks } = useSelector((state) => state.phonebooks);
 
     const nodeList = phonebooks.map(

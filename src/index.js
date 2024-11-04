@@ -7,12 +7,8 @@ import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers';
 import { Provider } from 'react-redux';
 import { thunk } from 'redux-thunk';
+import store from './store';
 
-
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunk) // For debugging
-);
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
