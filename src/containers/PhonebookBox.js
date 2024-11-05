@@ -1,4 +1,4 @@
-import {  useEffect } from "react"
+import { useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux';
 import PhonebookList from "../components/PhonebookList"
 import PhonebookTopBar from "./PhonebookTopbar"
@@ -37,8 +37,8 @@ export default function PhonebookBox() {
   if (!loading) {
     return (
       <div className='container'>
-        {/* <p style={{marginTop:"50px"}}>Page: {page}</p> */}
-        {/* <p>Total Page: {totalPage}</p> */}
+        <p style={{marginTop:"50px"}}>Page: {page}</p>
+        <p>Total Page: {totalPage}</p>
         <PhonebookTopBar/>
         <div>
           {phonebooks ? <PhonebookList/> : ''}

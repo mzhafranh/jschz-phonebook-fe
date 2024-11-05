@@ -1,12 +1,3 @@
-import axios from 'axios'
-
-const API_URL = 'http://localhost:3001/api/'
-
-const request = axios.create({
-  baseURL: API_URL,
-  timeout: 1000
-});
-
 export const fetchPhonebooks = (phonebooks) => ({
   type: 'FETCH_PHONEBOOKS',
   payload: phonebooks
