@@ -24,9 +24,9 @@ export default function PhonebookDeleteConfirmation({ id }) {
     };
 
     return (
-        <>
+        <div aria-label="PhonebookDeleteConfirmation" >
             {/* Button to show the form */}
-            <button className='btn p-1' onClick={handleOpenConfirmation}>
+            <button className='btn p-1' onClick={handleOpenConfirmation} aria-label="delete-item">
                 <FontAwesomeIcon icon={faTrashCan} />
             </button>
 
@@ -76,6 +76,6 @@ export default function PhonebookDeleteConfirmation({ id }) {
                     </div>
                 </div>
             )}
-        </>
+        </div>
     );
 }

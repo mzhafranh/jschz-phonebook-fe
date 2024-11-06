@@ -12,10 +12,10 @@ export default function PhonebookBox() {
   useEffect(() => {
     dispatch(fetchPhonebookData('', 'asc', 1));
   }, []);
- 
+
   const handleScroll = () => {
     if (window.innerHeight + document.documentElement.scrollTop >= document.documentElement.offsetHeight - 100 && !loading) {
-      if (page < totalPage){
+      if (page < totalPage) {
         dispatch(setPage(page + 1));
       }
     }
@@ -26,7 +26,7 @@ export default function PhonebookBox() {
     if (page > 1 && page <= totalPage) { // Prevent fetch on initial load
       dispatch(fetchPhonebookData(keyword, sort, page));
     }
-  }, [ page, keyword, sort]);
+  }, [page, keyword, sort]);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
@@ -37,13 +37,19 @@ export default function PhonebookBox() {
   if (!loading) {
     return (
       <div className='container'>
-        <p style={{marginTop:"50px"}}>Page: {page}</p>
-        <p>Total Page: {totalPage}</p>
-        <PhonebookTopBar/>
+        <div data-testid="hidden-phonebookbox-top" style={{ display: 'none' }}>
+          PhonebookBoxTest
+        </div>
+        {/* <p style={{marginTop:"50px"}}>Page: {page}</p> */}
+        {/* <p>Total Page: {totalPage}</p> */}
+        <PhonebookTopBar />
         <div>
-          {phonebooks ? <PhonebookList/> : ''}
+          {phonebooks ? <PhonebookList /> : ''}
         </div>
         {/* {data ? <p>Data: {JSON.stringify(data.phonebooks)}</p> : <p>Loading...</p>} */}
+        <div data-testid="hidden-phonebookbox-bottom" style={{ display: 'none' }}>
+          PhonebookBoxTest
+        </div>
       </div>
     )
   }

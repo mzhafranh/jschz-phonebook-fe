@@ -46,7 +46,7 @@ export default function PhonebookItem({ id, avatar, name, phone}) {
   };
 
   return (
-    <div className="custom-width mb-1 mt-3">
+    <div className="custom-width mb-1 mt-3" aria-label="PhonebookItem" >
       <div className="card" style={{ background: "#CCC", paddingLeft: "5px"}}>
         <div className='row g-0'>
           {avatar !== "null" ? (
@@ -86,7 +86,7 @@ export default function PhonebookItem({ id, avatar, name, phone}) {
                   <p className='m-0'>{editableName}</p>
                   <p className='m-0'>{editablePhone}</p>
                   {/* <p>{id}</p> */}
-                  <button className="btn p-1" onClick={handleEditClick}>
+                  <button className="btn p-1" onClick={handleEditClick} aria-label="edit-item">
                     <FontAwesomeIcon icon={faPenToSquare} />
                   </button>
                   <PhonebookDeleteConfirmation id={id}/>

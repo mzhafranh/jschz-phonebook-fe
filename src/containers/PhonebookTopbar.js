@@ -24,19 +24,20 @@ export default function PhonebookTopBar() {
     }
 
     return (
-        <div className='custom-row' style={{
+        <div className='custom-row' aria-label="PhonebookTopBar" 
+        style={{
             position: 'absolute',
             top: '10px',
             left: '10px',
             right: '10px',
         }}>
             <div className='custom-col-auto'>
-                <button className='btn' onClick={handleSortChange} style={{ backgroundColor: "#AF8210" }}>
+                <button className='btn' onClick={handleSortChange} style={{ backgroundColor: "#AF8210" }} aria-label="sort">
                     <FontAwesomeIcon icon={faArrowDownZA} />
                 </button>
             </div>
             <div className='custom-col'>
-                <div className='custom-input-group' style={{ border: '1px solid black', borderRadius: '3px' }} >
+                <div className='custom-input-group' style={{ border: '1px solid black', borderRadius: '3px' }} aria-label="search">
                     <span className='custom-input-group-text' style={{ borderRight: 'none', background: 'white' }}>
                         <FontAwesomeIcon icon={faMagnifyingGlass} />
                     </span>

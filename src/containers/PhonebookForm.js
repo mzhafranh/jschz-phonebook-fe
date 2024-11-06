@@ -36,9 +36,9 @@ export default function PhonebookForm() {
     };
 
     return (
-        <div>
+        <div aria-label="PhonebookForm" >
             {/* Button to show the form */}
-            <button className='btn' onClick={handleOpenForm} style={{ backgroundColor: "#AF8210" }}>
+            <button className='btn' onClick={handleOpenForm} style={{ backgroundColor: "#AF8210" }} data-testid="form-button">
                 <FontAwesomeIcon icon={faUserPlus} />
             </button>
 
@@ -78,6 +78,7 @@ export default function PhonebookForm() {
                                     onChange={(e) => setName(e.target.value)}
                                     required
                                     style={{ border: '1px solid black' }}
+                                    aria-label="input-name"
                                 />
                             </div>
                             <div className="mb-3">
@@ -89,6 +90,7 @@ export default function PhonebookForm() {
                                     onChange={(e) => setPhone(e.target.value)}
                                     required
                                     style={{ border: '1px solid black' }}
+                                    aria-label="input-phone"
                                 />
                             </div>
                             <div style={{ alignItems: "center", textAlign:"center"}}>

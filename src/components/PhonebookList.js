@@ -14,7 +14,7 @@ export default function PhonebookList() {
             phone={phonebook.phone}
         />)
     return (
-        <div className='row justify-content-center' style={{marginTop:"50px"}}>
+        <div className='row justify-content-center' style={{marginTop:"50px"}} aria-label="PhonebookList" >
             {/* {JSON.stringify(data)} */}
             {nodeList}
         </div>
