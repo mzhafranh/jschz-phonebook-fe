@@ -69,6 +69,7 @@ export default function PhonebookItem({ id, avatar, name, phone}) {
                     onChange={handleNameChange}
                     className="custom-form-control"
                     style={{marginBottom:"5px"}}
+                    aria-label="edit-name"
                   />
                   <input
                     type="text"
@@ -76,8 +77,9 @@ export default function PhonebookItem({ id, avatar, name, phone}) {
                     onChange={handlePhoneChange}
                     className="custom-form-control"
                     style={{marginBottom:"5px"}}
+                    aria-label="edit-phone"
                   />
-                  <button className="btn" onClick={handleSave}>
+                  <button className="btn" onClick={handleSave} aria-label="save-item">
                     <FontAwesomeIcon icon={faFloppyDisk} />
                   </button>
                 </>
