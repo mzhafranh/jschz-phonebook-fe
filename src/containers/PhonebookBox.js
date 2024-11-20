@@ -2,7 +2,7 @@ import { useEffect } from "react"
 import { useSelector, useDispatch } from 'react-redux';
 import PhonebookList from "../components/PhonebookList"
 import PhonebookTopBar from "./PhonebookTopbar"
-import { fetchPhonebookData, setPage } from '../actions';
+import { fetchPhonebookData, refreshPhonebookData, setPage } from '../actions';
 
 export default function PhonebookBox() {
 
@@ -37,9 +37,6 @@ export default function PhonebookBox() {
   if (!loading) {
     return (
       <div className='container'>
-        <div data-testid="hidden-phonebookbox-top" style={{ display: 'none' }}>
-          PhonebookBoxTest
-        </div>
         {/* <p style={{marginTop:"50px"}}>Page: {page}</p> */}
         {/* <p>Total Page: {totalPage}</p> */}
         <PhonebookTopBar />
@@ -47,9 +44,6 @@ export default function PhonebookBox() {
           {phonebooks ? <PhonebookList /> : ''}
         </div>
         {/* {data ? <p>Data: {JSON.stringify(data.phonebooks)}</p> : <p>Loading...</p>} */}
-        <div data-testid="hidden-phonebookbox-bottom" style={{ display: 'none' }}>
-          PhonebookBoxTest
-        </div>
       </div>
     )
   }

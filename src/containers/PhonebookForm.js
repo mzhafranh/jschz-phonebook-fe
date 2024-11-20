@@ -4,23 +4,20 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import { addPhonebook } from "../actions";
+import { useNavigate } from 'react-router-dom';
 
 
 export default function PhonebookForm() {
     const dispatch = useDispatch();
     const { keyword, sort } = useSelector((state) => state.phonebooks);
+    const navigate = useNavigate();
 
-    const [isFormVisible, setIsFormVisible] = useState(false);
+
     const [name, setName] = useState("");
     const [phone, setPhone] = useState("");
 
-    
-    const handleOpenForm = () => {
-        setIsFormVisible(true);
-    };
-
     const handleCloseForm = () => {
-        setIsFormVisible(false);
+        navigate('/');    
     };
 
     const handleSubmit = (e) => {
@@ -32,18 +29,13 @@ export default function PhonebookForm() {
         
         setName("")
         setPhone("")
-        setIsFormVisible(false);
+        navigate('/');    
     };
 
     return (
         <div aria-label="PhonebookForm" >
             {/* Button to show the form */}
-            <button className='btn' onClick={handleOpenForm} style={{ backgroundColor: "#AF8210" }} data-testid="form-button">
-                <FontAwesomeIcon icon={faUserPlus} />
-            </button>
-
             {/* Fullscreen form overlay */}
-            {isFormVisible && (
                 <div
                     style={{
                         position: "fixed",
@@ -51,7 +43,7 @@ export default function PhonebookForm() {
                         left: 0,
                         width: "100%",
                         height: "100%",
-                        backgroundColor: "rgba(0, 0, 0, 0.8)", // Semi-transparent background
+                        backgroundColor: "white",
                         display: "flex",
                         justifyContent: "center",
                         alignItems: "center",
@@ -114,7 +106,6 @@ export default function PhonebookForm() {
                         </form>
                     </div>
                 </div>
-            )}
         </div>
     );
 }

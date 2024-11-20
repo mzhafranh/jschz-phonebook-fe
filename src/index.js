@@ -3,17 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { legacy_createStore as createStore, applyMiddleware } from 'redux';
-import rootReducer from './reducers';
 import { Provider } from 'react-redux';
-import { thunk } from 'redux-thunk';
 import store from './store';
+import { BrowserRouter } from 'react-router-dom';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
 

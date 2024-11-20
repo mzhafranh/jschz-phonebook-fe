@@ -33,6 +33,10 @@ export const setTotalPage = (totalPage) => ({
   payload: totalPage
 })
 
+export const cleanPhonebook = () => ({
+  type: 'CLEAN_PHONEBOOKS'
+})
+
 export const fetchPhonebookData = (keyword, sort, page) => {
   return async (dispatch) => {
     dispatch(setKeyword(keyword))
@@ -118,7 +122,6 @@ export const addPhonebook = (name, phone, keyword, sort) => {
 
       const result = await response.json();
       console.log("Data posted successfully:", result);
-      dispatch(refreshPhonebookData(keyword, sort, 1))
     } catch (error) {
       console.error("Error posting data:", error);
     }

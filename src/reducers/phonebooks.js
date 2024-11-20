@@ -48,6 +48,11 @@ function phonebooks(state = initialState, action) {
         ...state,
         loading: action.payload,
       };
+    case 'CLEAN_PHONEBOOKS':
+      return {
+        ...state,
+        phonebooks: [],
+      };
 
     default:
       return state;

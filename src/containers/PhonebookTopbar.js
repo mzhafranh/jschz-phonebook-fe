@@ -1,13 +1,15 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowDownZA, faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDownZA, faMagnifyingGlass, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import PhonebookForm from './PhonebookForm';
 import { useSelector, useDispatch } from 'react-redux';
-import { refreshPhonebookData, setKeyword } from '../actions';
+import { cleanPhonebook, refreshPhonebookData, setKeyword } from '../actions';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function PhonebookTopBar() {
     const dispatch = useDispatch();
     const { keyword, sort } = useSelector((state) => state.phonebooks);
+    const navigate = useNavigate();
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
@@ -23,14 +25,19 @@ export default function PhonebookTopBar() {
         }
     }
 
+    const handleOpenForm = () => {
+        dispatch(cleanPhonebook())
+        navigate('/add')
+    }
+
     return (
-        <div className='custom-row' aria-label="PhonebookTopBar" 
-        style={{
-            position: 'absolute',
-            top: '10px',
-            left: '10px',
-            right: '10px',
-        }}>
+        <div className='custom-row' aria-label="PhonebookTopBar"
+            style={{
+                position: 'absolute',
+                top: '10px',
+                left: '10px',
+                right: '10px',
+            }}>
             <div className='custom-col-auto'>
                 <button className='btn' onClick={handleSortChange} style={{ backgroundColor: "#AF8210" }} aria-label="sort">
                     <FontAwesomeIcon icon={faArrowDownZA} />
@@ -46,12 +53,14 @@ export default function PhonebookTopBar() {
                         type='text'
                         style={{ borderLeft: 'none' }}
                         value={keyword}  // Set the input's value to the query state
-                        onChange={handleSearchChange} 
+                        onChange={handleSearchChange}
                     />
                 </div>
             </div>
             <div className='custom-col-auto'>
-                <PhonebookForm/>
+                <button className='btn' onClick={handleOpenForm} style={{ backgroundColor: "#AF8210" }} data-testid="form-button">
+                    <FontAwesomeIcon icon={faUserPlus} />
+                </button>
             </div>
         </div>
     )

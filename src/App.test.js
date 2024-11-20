@@ -5,14 +5,12 @@ import './index.css';
 import App from './App';
 import configureMockStore from 'redux-mock-store';
 import { thunk } from 'redux-thunk';
-// import store from './store';
 import { legacy_createStore as createStore, applyMiddleware } from 'redux';
 import rootReducer from './reducers';
 import phonebooks from './reducers/phonebooks';
 import PhonebookTopBar from './containers/PhonebookTopbar';
 import PhonebookList from './components/PhonebookList';
-import PhonebookForm from './containers/PhonebookForm';
-import PhonebookBox from './containers/PhonebookBox';
+
 
 const mockStore = configureMockStore([thunk]);
 
